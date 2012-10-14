@@ -3,13 +3,13 @@
 #include <vector>
 #include <iostream>
 
-#include "Unicode.h"
+#include "Unicode.hpp"
 
 using std::string;
 using std::vector;
 using std::cerr;
 
-namespace MCServer {
+namespace Util {
 
 vector<uint16_t> utf8ToUcs2(const string &utf8) {
     vector<uint16_t> result;

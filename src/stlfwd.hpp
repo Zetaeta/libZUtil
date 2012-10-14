@@ -14,6 +14,11 @@ template<class T, class A = std::allocator<T>>
 class vector;
 #endif
 
+#ifndef _GLIBCXX_FUNCTIONAL
+template <typename Signature>
+class function;
+#endif
+
 }
 
 #endif

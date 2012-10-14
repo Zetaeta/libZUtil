@@ -10,6 +10,10 @@ libZUtil_la_CXXFLAGS = -g -fPIC -std=c++11 -Wall -pg
 libZUtil_la_LDFLAGS = -pg
 libZUtil_la_LIBADD = -lendian -lIOStream -lz
 
-libZUtil_la_SOURCES = src/Endian.cpp src/Unicode.cpp
+libZUtil_la_SOURCES = src/Endian.cpp src/Unicode.cpp src/StringUtils.cpp \
+    src/ErrorHandler.cpp
 
-libZUtil_la_include_HEADERS = src/Endian.h src/Unicode.h src/stlfwd.hpp
+libZUtil_la_include_HEADERS = src/Endian.h src/Unicode.hpp src/MaybePointer.hpp \
+    src/StringUtils.hpp src/stlfwd.hpp src/ErrorHandler.hpp src/ErrorType.hpp \
+    src/InvalidFileDescriptor.hpp src/InvalidIOOperation.hpp src/IOError.hpp \
+    src/IOException.hpp src/InvalidArgument.hpp
