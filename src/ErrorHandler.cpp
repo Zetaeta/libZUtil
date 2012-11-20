@@ -1,6 +1,7 @@
 
 #include <errno.h>
 #include <string.h>
+#include <sstream>
 
 #include "ErrorHandler.hpp"
 #include "InvalidFileDescriptor.hpp"
@@ -9,19 +10,29 @@
 #include "InvalidArgument.hpp"
 
 using std::string;
+using namespace Util::ErrorType;
 
 namespace Util {
 
-void throwException(int errorCode, const string &message) {
+void _throwException(const std::string &file, int line, int errorCode,
+                     const string &message, ErrorType::ErrorType type) {
+    std::ostringstream msg_;
+    msg_ << (message == "" ? strerror(errorCode) : message) << " at " << file
+        << ":" << line;
+    std::string msg = msg_.str();
     switch (errorCode) {
     case EBADF:
-        throw InvalidFileDescriptor(message != "" ? message : strerror(errorCode));
+        throw InvalidFileDescriptor(msg);
     case EINVAL:
-        throw InvalidArgument(message != "" ? message : strerror(errorCode));
+        throw InvalidArgument(msg);
     case EISDIR:
-        throw InvalidIOOperation(message != "" ? message : strerror(errorCode));
+        throw InvalidIOOperation(msg);
     case EIO:
-        throw IOError(message != "" ? message : strerror(errorCode));
+        throw IOError(msg);
+    case EPIPE:
+        if (type == DEFAULT) {
+            
+        }
     default:
         throw std::runtime_error(message != "" ? message : strerror(errorCode));
     }
@@ -36,7 +47,6 @@ std::string getMessage(int errorCode, ErrorType::ErrorType type) {
         break;
     }
 
-    def:
     return strerror(errorCode);
 }
 

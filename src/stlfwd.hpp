@@ -19,6 +19,9 @@ template <typename Signature>
 class function;
 #endif
 
+template <class T>
+class shared_ptr;
+
 }
 
 #endif
