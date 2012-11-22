@@ -9,6 +9,7 @@ namespace Util {
 std::string demangle(const std::string &);
 
 bool endsWith(const std::string &string, const std::string &ending);
+bool startsWith(const std::string &string, const std::string &start);
 
 // Template function to check ending, useful for "Plugins::PluginLoaderRule"'s
 template<const char *Ending> bool endsWithTemplate(const char *string) {
@@ -17,6 +18,8 @@ template<const char *Ending> bool endsWithTemplate(const char *string) {
 
 std::string toLower(const std::string &string);
 std::vector<std::string> split(const std::string &string, const std::string &splitter);
+
+}
 
 template <typename T, typename Stream>
 Stream & operator<<(Stream &stream, const std::vector<T> &v) {
@@ -28,6 +31,5 @@ Stream & operator<<(Stream &stream, const std::vector<T> &v) {
     return stream;
 }
 
-}
 
 #endif

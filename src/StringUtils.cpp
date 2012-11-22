@@ -35,6 +35,15 @@ bool endsWith(const string &str, const string &ending) {
     }
 }
 
+bool startsWith(const string &str, const string &start) {
+    if (str.size() > start.size()) {
+        return str.compare(0, start.size(), start) == 0;
+    }
+    else {
+        return false;
+    }
+}
+
 string toLower(const std::string &str) {
     string lower(str);
     std::transform(lower.begin(), lower.end(), lower.begin(), tolower);
