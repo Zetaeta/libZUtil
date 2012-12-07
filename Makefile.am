@@ -7,10 +7,10 @@ TESTS = test/test-all.sh
 
 libZUtil_la_includedir = $(includedir)/Util
 
-libZUtil_la_CXXFLAGS = -g -fPIC -std=c++11 -Wall -pg
+libZUtil_la_CXXFLAGS = -g -fPIC -std=c++11 -Wall
 
-libZUtil_la_LDFLAGS = -pg
-libZUtil_la_LIBADD = -lendian -lIOStream -lz
+libZUtil_la_LDFLAGS =
+libZUtil_la_LIBADD = -lz
 
 libZUtil_la_SOURCES = src/Endian.cpp src/Unicode.cpp src/StringUtils.cpp \
     src/ErrorHandler.cpp
