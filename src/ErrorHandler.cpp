@@ -17,8 +17,11 @@ namespace Util {
 void _throwException(const std::string &file, int line, int errorCode,
                      const string &message, ErrorType::ErrorType type) {
     std::ostringstream msg_;
-    msg_ << (message == "" ? strerror(errorCode) : message) << " at " << file
-        << ":" << line;
+    msg_ << strerror(errorCode);
+    if (message != "") {
+        msg_ << ": " << message;
+    }
+    msg_ << " at " << file << ":" << line;
     std::string msg = msg_.str();
     switch (errorCode) {
     case EBADF:
@@ -34,7 +37,7 @@ void _throwException(const std::string &file, int line, int errorCode,
             
         }
     default:
-        throw std::runtime_error(message != "" ? message : strerror(errorCode));
+        throw std::runtime_error(msg);
     }
 }
 

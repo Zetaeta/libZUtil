@@ -25,11 +25,20 @@ public:
         other.isPointer = false;
     }
 
-    template <typename U, typename = typename std::enable_if<
-                                        std::is_convertible<U *, T *>::value,
-                                     U>::type>
+    template <typename U, typename = typename
+    std::enable_if<
+        std::is_convertible<U *, T *>::value,
+    U>::type>
+    MaybePointer(const MaybePointer<U> &other)
+    :ptr(other.ptr), isPointer(other.isPointer) {
+        other.isPointer = false;
+    }
 
-    MaybePointer(const MaybePointer<T> &other)
+    template <typename U, typename = typename
+    std::enable_if<
+        std::is_convertible<U *, T *>::value,
+    U>::type>
+    MaybePointer(MaybePointer<U> &&other)
     :ptr(other.ptr), isPointer(other.isPointer) {
         other.isPointer = false;
     }
@@ -55,26 +64,19 @@ public:
         return *ptr;
     }
 
-    const T & operator*() const {
+    T & operator*() const {
         return *ptr;
     }
 
-    T * operator->() {
+    T * operator->() const {
         return ptr;
     }
 
-    const T * operator->() const {
+    operator T*() const {
         return ptr;
     }
 
-    operator T*() {
-        return ptr;
-    }
-
-    operator const T*() const {
-        return ptr;
-    }
-
+/*
     template <class U>
     operator MaybePointer<U>() {
         return MaybePointer<U>(ptr);
@@ -84,6 +86,7 @@ public:
     operator const MaybePointer<U>() const {
         return MaybePointer<U>(ptr);
     }
+*/
 
     template<class U>
     operator typename std::enable_if<std::is_convertible<T, U>::value, U>::type*() {
@@ -94,6 +97,7 @@ public:
     operator const typename std::enable_if<std::is_convertible<T, U>::value, U>::type*() const {
         return ptr;
     }
+
 
     T * getRaw() {
         return operator T*();
@@ -107,6 +111,12 @@ public:
 private:
     T *ptr;
     mutable bool isPointer; // Must be mutable for modification in copy constructor
+
+    template <class U>
+    friend class MaybePointer;
+
+    MaybePointer(T *ptr, bool isPointer)
+    :ptr(ptr), isPointer(isPointer) {}
 };
 
 }
